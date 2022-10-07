@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+<ul class="list-group list-group-flush">
+    {% for item in vehicule %}
+        <li class="list-group-item">
+            <img src="{{ item.photo }}" style="width: 250px;">
+            <div class="data">
+                <h4>
+                    {{ item.titre }}
+                </h4>
+                <p>
+                    {{ item.description }} |
+                <small>
+                    {{ item.prixJournalier }}€/J
+                </small>
+                </p>
+            </div>
+            <a href="{{ path('commande_vehicule',{id: item.id}) }}" class="btn btn-sm btn-success">Réserver et payer</a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

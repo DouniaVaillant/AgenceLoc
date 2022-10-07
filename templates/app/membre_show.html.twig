@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Compte {% endblock %}
+
+{% block body %}
+
+
+<h1 class="text-center">Profil et historique</h1>
+
+<div class="container-fluid">
+<h2 class="col-12 text-center">
+    {{ membre.nom }}
+    {{ membre.prenom }}
+    <small class="text-muted">@{{ membre.pseudo }}</small>
+</h2>
+
+<div class="row my-4">
+    <p class="col-4">
+        {{ membre.email }}<br>
+        Statut: 
+        {% if membre.roles.0 == 'ROLE_ADMIN' %}
+            Administrateur
+        {% else %}
+            Client
+        {% endif %}
+        <br>
+        
+        Inscrit depuis le: {{ membre.dateEnregistrement|date('d/m/y') }}
+    </p>
+</div>
+
+<h3 class="my-2">Commandes effectuées</h3>
+<div class="list-group bg-light m-4">
+    {% for commande in commandes %}
+        {% if commande.membre.id == membre.id %}
+        <a href="{{ path('commande_show', {id: commande.id}) }}" class="list-group-item list-group-item-action list-group-item-light">
+            <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ commande.id }}</h5>
+            <small>{{ commande.dateEnregistrement|date('d/m/y') }}</small>
+            </div>
+            <p class="mb-1">{{ commande.vehicule.titre }}</p>
+            <small>{{ commande.prixTotal }}</small>
+        </a>
+        {% endif %}
+    {% endfor %}
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

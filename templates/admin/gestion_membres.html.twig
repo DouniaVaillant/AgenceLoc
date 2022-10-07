@@ -1,0 +1,80 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+BackOffice
+{% endblock %}
+
+{% block body %}
+
+<h1>
+    BACKOFFICE | Membres
+</h1>
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success text-center">{{ message }}</div>
+{% endfor %}
+<table class="table table-hover table-bordered text-center">
+    <thead class="bg-dark text-light">
+        <tr>
+            {% for colonne in colonnes %}
+                {% if colonne != 'password' %}    
+                    <th>{{ colonne }}</th>
+                {% endif %} 
+            {% endfor %}
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for membre in membres %}
+        <tr>
+            <td>{{ membre.id }}</td>
+            <td>{{ membre.pseudo }}</td>
+            {% if membre.roles.0 == 'ROLE_ADMIN' %}
+                <td>Administrateur</td>
+            {% else %}
+                <td>Membre</td>
+            {% endif %}
+            {# <td>{{ membre.password}}</td> #}
+            <td>{{ membre.nom}}</td>
+            <td>{{ membre.prenom}}</td>
+            <td>{{ membre.email}}</td>
+
+            <td>{{ membre.dateEnregistrement| date("d/m/Y à H")}}h</td>
+            <td>{{ membre.civilite}}</td>
+            <td>
+            <a href="{{ path('admin_membre_show',{id: membre.id}) }}" class="text-dark"><i class="fas fa-search"></i></a>
+            <a href="{{ path('admin_edit_membre',{id: membre.id}) }}" class="text-warning"><i class="fas fa-edit"></i></a>
+            <a onclick="return confirm('Cette action est définitive, voulez vous vraiment supprimer ce membre ?')" href="{{ path('admin_delete_membre',{id: membre.id}) }}" class="text-danger"><i class="fas fa-trash"></i></a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+
+
+{{form_start(formMembre, {
+    attr: {
+        novalidate: 'novalidate'
+    }
+})}}
+
+{{ form_row(formMembre.nom)}}
+{{ form_row(formMembre.prenom) }}
+{{ form_row(formMembre.pseudo) }}
+{{ form_row(formMembre.email)}}
+{{ form_row(formMembre.plainPassword) }}
+{{ form_row(formMembre.civilite)}}
+{{ form_row(formMembre.roles)}}
+
+
+
+<button type="submit" class="btn btn-success mt-2">
+{% if editMode %}
+    Enregistrer les modifications
+{% else %}
+    Ajouter le membre
+{% endif %}
+</button>
+{{form_end(formMembre)}}
+{% endblock %}

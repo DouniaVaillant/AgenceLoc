@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Description de la commande {% endblock %}
+
+{% block body %}
+
+<ul>
+    <li> Acheteur:
+    {{ commande.membre.nom }}
+    {{ commande.membre.prenom }}
+    </li>
+    <li> Véhicule:
+    {{ commande.vehicule.marque }}
+    {{ commande.vehicule.modele }}
+    {{ commande.vehicule.prixJournalier }}€/J
+    </li>
+    <li> Prix Total:
+    {{ commande.prixtotal }}€ pour une durée de {{ duree }}jours.
+    </li>
+    <li> La location a durée du 
+    {{ commande.dateHeureDepart|date('d-m-Y à H:i') }}
+    au
+    {{ commande.dateHeureFin|date('d-m-Y à H:i') }}.
+    </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

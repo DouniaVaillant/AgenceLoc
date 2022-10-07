@@ -1,0 +1,69 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+BackOffice
+{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success text-center">{{ message }}</div>
+{% endfor %}
+<table class="table table-fluid table-bordered text-center">
+    <thead class="bg-dark text-light">
+        <tr>
+            {% for colonne in colonnes %}
+                <th>{{ colonne }}</th>
+            {% endfor %}
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for vehicule in vehicules %}
+        <tr>
+            <td>{{ vehicule.id }}</td>
+            <td>{{ vehicule.titre}}</td>
+            <td>{{ vehicule.marque}}</td>
+            <td>{{ vehicule.modele}}</td>
+            <td>{{ vehicule.description}}</td>
+            <td><img src="{{ vehicule.photo }}" style="width: 150px;" alt=""></td>
+            <td>{{ vehicule.prixJournalier}}</td>
+            <td>{{ vehicule.dateEnregistrement|date('d/m/Y à H:i:s') }}</td>
+            <td>
+            <a href="{{ path('admin_vehicule_show',{id: vehicule.id}) }}" class="text-dark"><i class="fas fa-search"></i></a>
+            <a href="{{ path('admin_edit_vehicule',{id: vehicule.id}) }}" class="text-warning"><i class="fas fa-edit"></i></a>
+            <a onclick="return confirm('voulez-vous supprimer cet vehicule ?')" href="{{ path('admin_delete_vehicule',{id: vehicule.id}) }}" class="text-danger"><i class="fas fa-trash"></i></a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+{{ form_start(formVehicule, {
+        attr: {
+            novalidate: 'novalidate'
+        }
+    }) }}
+
+    {{ form_row(formVehicule.titre) }}
+    {{ form_row(formVehicule.marque) }}
+    {{ form_row(formVehicule.modele) }}
+    {{ form_row(formVehicule.description) }}
+    {{ form_row(formVehicule.photo) }}
+    {{ form_row(formVehicule.prix_journalier) }}
+
+    <button type="submit" class="btn btn-primary mt-2">
+        {% if editMode %}
+            Modifier
+        {% else %}
+            Ajouter
+        {% endif %}
+    </button>
+
+{{form_end(formVehicule)}}
+
+
+</div>
+{% endblock %}

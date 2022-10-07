@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Description de la commande {% endblock %}
+
+{% block body %}
+
+<h2 class="text-center">
+    {{ vehicule.titre }}
+</h2>
+
+<div class="container-fluid text-center">
+
+    {{ vehicule.marque }}
+    {{ vehicule.modele }}<br>
+
+    <img src="{{ vehicule.photo }}" style="height: 400px;"> <br>
+    
+    Description:
+    {{ vehicule.description }} <br>
+    Prix journalier:
+    {{ vehicule.prixJournalier }}€<br>
+    Ajouté le:
+    {{ vehicule.dateenregistrement|date('d/m/Y') }}
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

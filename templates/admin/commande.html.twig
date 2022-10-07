@@ -1,0 +1,73 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+
+<h1>
+    BACKOFFICE | Commandes
+</h1>
+
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success text-center">{{ message }}</div>
+{% endfor %}
+
+<table class="table table-hover table-bordered text-center">
+    <thead class="bg-dark text-light">
+        <tr>
+            <th>#</th>
+            <th>Membre</th>
+            <th>Vehicule</th>
+            <th>Départ</th>
+            <th>Fin</th>
+            <th>Prix Total</th>
+            <th>Date enregistrement</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for commande in commandes %}
+        <tr>
+            <td>{{ commande.id }}</td>
+            <td>{{ commande.membre.id }} - {{ commande.membre.nom }} - {{ commande.membre.prenom }} - {{ commande.membre.email }}</td>
+            <td>{{ commande.vehicule.id }} - {{ commande.vehicule.titre }}</td>
+            <td>{{ commande.prixtotal }}</td>
+            <td>{{ commande.dateheuredepart|date("d/m/Y à H") }}</td>
+            <td>{{ commande.dateheurefin|date("d/m/Y à H") }}</td>
+
+            <td>{{ commande.dateEnregistrement|date("d/m/Y à H") }}h</td>
+            <td>
+                <a href="{{ path('commande_show',{id: commande.id}) }}" class="text-secondary">
+                    <i class="fas fa-search"></i>
+                </a>
+                <a href="{{ path('admin_commande_edit',{id: commande.id}) }}" class="text-secondary">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a onclick="return confirm('Cette action est définitive, voulez vous vraiment supprimer ce commande ?')" href="{{ path('admin_delete_commande',{id: commande.id}) }}" class="text-secondary">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+{{ form_start(form, {
+    attr: {
+        novalidate: 'novalidate'
+    }
+}) }}
+
+{{ form_row(form.date_heure_depart) }}
+{{ form_row(form.date_heure_fin) }}
+{{ form_row(form.prix_total) }}
+{{ form_row(form.membre) }}
+{{ form_row(form.vehicule) }}
+
+<button type="submit" class="btn btn-warning">Enregistrer</button>
+
+{{ form_end(form) }}
+
+
+
+{% endblock %}

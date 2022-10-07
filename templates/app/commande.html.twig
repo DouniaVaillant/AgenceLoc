@@ -1,0 +1,65 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<h1 class="text-center">Commander</h1>
+
+
+
+
+{% if app.user %}
+
+<h2 class="text-center">
+    {{ vehicule.titre }}
+</h2>
+
+<div class="container-fluid text-center">
+
+    {{ vehicule.marque }}
+    {{ vehicule.modele }}<br>
+
+    <img src="{{ vehicule.photo }}" style="height: 400px;"> <br>
+    
+    Description:
+    {{ vehicule.description }} <br>
+    Prix journalier:
+    {{ vehicule.prixJournalier }}€<br>
+    Ajouté le:
+    {{ vehicule.dateenregistrement|date('d/m/Y') }}
+    
+</div>
+
+
+{{ form_start(formCommande, {
+        attr: {
+            novalidate: 'novalidate'
+        }
+    }) }}
+
+    {{ form_row(formCommande.date_heure_depart) }}
+    {{ form_row(formCommande.date_heure_fin) }}
+
+    <button type="submit" class="btn btn-primary mt-2">
+        Commander
+    </button>
+
+{{form_end(formCommande)}}
+
+
+
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
